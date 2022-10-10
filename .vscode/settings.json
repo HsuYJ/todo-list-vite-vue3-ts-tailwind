@@ -1,0 +1,11 @@
+{
+  "files.eol": "\n",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "editor.formatOnSaveMode": "file",
+  "tailwindCSS.experimental.classRegex": [
+    "`tw([^`]*)`", // `tw\n...`
+    "'tw([^'\n]*)'", // 'tw ...'
+  ],
+}
