@@ -1,8 +1,6 @@
 import type { Ref } from 'vue';
-import { ref } from 'vue';
-import type {
-  RawTodo, SerialNumber, Todos,
-} from '../model/types';
+import { watch, ref } from 'vue';
+import type { RawTodo, SerialNumber, Todos } from '../model/types';
 import type { TodoList as Model } from '../model';
 import { create as createModel } from '../model';
 
@@ -83,6 +81,7 @@ export class TodoList {
       sn: -1,
       task: '',
     };
+    this.#registerRender();
 
     return result;
   }
@@ -101,8 +100,15 @@ export class TodoList {
   }
 }
 
-export function create (todos: RawTodo[] = []) {
-  const todoList = new TodoList(todos);
+const ls = localStorage;
+const lsKey = 'tasks';
+const tasks: Todos = JSON.parse(ls.getItem(lsKey) || '[]');
+const todoList: TodoList = new TodoList(tasks);
 
+watch(todoList.todos, (value) => {
+  ls.setItem(lsKey, JSON.stringify(value));
+});
+
+export function use () {
   return todoList;
 }
